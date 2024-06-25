@@ -7,7 +7,7 @@ tracking_distance = 4.0; % Desired distance from the Aruco marker in meters
 max_altitude = 5.0; % Maximum allowed altitude in meters
 
 function pose = scan_arucos(camera_fd, camera_intrinsics, id)
-    aruco_scale_mm = 173; % Size of the Aruco marker in mm
+    aruco_scale_mm = 150; % Size of the Aruco marker in mm
     img = snapshot(camera_fd);
     if isempty(img) || any(size(img) == 0)
         pose = [];
