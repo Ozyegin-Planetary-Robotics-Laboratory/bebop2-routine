@@ -1,35 +1,35 @@
+% Computer Vision Toolbox
+% Parrot Drone Toolbox
+
 aruco_target_id = 3;
 load('camera_param.mat');
 tracking_distance = 4.0;
 
 function pose = scan_arucos(camera_fd, camera_intrinsics, id)
-  aruco_scale_mm = 173;
-  img = snapshot(camera_fd);
-  if isempty(img) || any(size(img) == 0)
-    pose = [];
-    return
-  end
-  
-  [ids, ~, poses] = readArucoMarker(img, "DICT_4X4_250", camera_intrinsics, aruco_scale_mm);
-  
-  if isempty(ids)
-    pose = [];
-    return
-  end
-
-  for i = 1:length(ids)
-    if ids(i) == id
-      pose = [poses(i)];
-      return;
-    end
-  end
+aruco_scale_mm = 173;
+img = snapshot(camera_fd);
+if isempty(img) || any(size(img) == 0)
   pose = [];
+  return
+end
+[ids, ~, poses] = readArucoMarker(img, "DICT_4X4_250", camera_intrinsics, aruco_scale_mm);
 
+if isempty(ids)
+  pose = [];
+  return
+end
+for i = 1:length(ids)
+  if ids(i) == id
+    pose = [poses(i)];
+    return;
+  end
+end
+pose = [];
 end
 
 function distance = calculate_commands(aruco_tag, drone_ideal_distance)
-  dx = aruco_tag.Translation(3)/1000;
-  distance = dx - drone_ideal_distance;
+dx = aruco_tag.Translation(3)/1000;
+distance = dx - drone_ideal_distance;
 end
 
 % Initialize the drone
