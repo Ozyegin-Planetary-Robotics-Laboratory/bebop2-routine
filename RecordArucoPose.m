@@ -34,8 +34,10 @@ for i = 1:total_frames
 end
 
 % Display camera positions.
-for i = 1:size(camera_poses, 1)
-  rigid_transform = camera_poses(i, 1);
-  timestamp = camera_poses(i, 2);
-  disp(['Rigid transform: ', num2str(rigid_transform), ' at ', datestr(timestamp)]);
+grid on
+axis equal
+axis manual
+for i = 1:size(camera_poses)
+  rigid_transform = camera_poses(i)
+  cam_plot = plotCamera('Location', rigid_transform.Translation, 'Orientation', rigid_transform.Rotation, 'Size', 0.1);
 end
