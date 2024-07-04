@@ -37,7 +37,10 @@ end
 grid on
 axis equal
 axis manual
+origin = rigidtform3d;
+origin.Rotation = eye(3);
+origin.Translation = [0, 0, 0];
 for i = 1:size(camera_poses)
   rigid_transform = camera_poses(i)
-  cam_plot = plotCamera('Location', rigid_transform.Translation, 'Orientation', rigid_transform.Rotation, 'Size', 0.1);
+  cam_plot = plotCamera('AbsolutePose', rigid_transform, 'Size', 0.1);
 end
