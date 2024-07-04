@@ -6,7 +6,7 @@ target_aruco_len    = 110;  % mm
 target_aruco_id     = 1;
 frames_per_sec      = 3;    % hz
 total_duration      = 10;   % secs
-load('cameraParams.mat', 'camera_params'); 
+load('cameraParams.mat'); 
 %----------------%
 
 % Create a connection to the drone
@@ -20,7 +20,7 @@ camera_poses = []
 for i = 1:total_frames
   pause(1.0 / frames_per_sec);
   frame = snapshot(drone_cam);
-  [ids, ~, poses] = readArucoMarker(frame, target_aruco_dict, camera_params.Intrinsics, target_aruco_len);
+  [ids, ~, poses] = readArucoMarker(frame, target_aruco_dict, cameraParams.Intrinsics, target_aruco_len);
   if isempty(ids)
     continue;
   end
